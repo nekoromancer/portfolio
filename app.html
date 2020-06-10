@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko" {{ HTML_ATTRS }}>
+<head>
+    {{ HEAD }}
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+</head>
+<body {{ BODY_ATTRS }}>
+    {{ APP }}
+</body>
+<script>
+    WebFontConfig = {
+        custom: {
+            urls: [
+                'https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap',
+                'https://fonts.googleapis.com/css2?family=Montaga&display=swap',
+            ]
+        }
+    };
+
+    (function(d) {
+        var wf = d.createElement('script'), s = d.scripts[0];
+        wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js';
+        wf.async = true;
+        s.parentNode.insertBefore(wf, s);
+    })(document);
+</script>
+</html>
