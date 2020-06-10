@@ -82,6 +82,10 @@
                     break;
                 case 1:
                     offsetArray[1] = this.offset >= 10 ? '0' : '1';
+
+                    if (offsetArray[1] === '1' && Number(offsetArray[2]) > 2) {
+                        offsetArray[2] = '0';
+                    }
                     break;
                 case 2:
                     if (direction === 'up') {

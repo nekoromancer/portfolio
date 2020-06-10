@@ -119,7 +119,6 @@
         justify-content: space-around;
         align-items: center;
         position: relative;
-        margin: auto;
         width: 1080px;
         height: 200px;
         border-radius: 25px;

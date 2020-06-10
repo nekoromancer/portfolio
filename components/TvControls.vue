@@ -1,0 +1,250 @@
+<template>
+    <div class="controls">
+        <tv-controls-display
+            :power="power"
+        />
+        <div class="controls__wrapper">
+            <p class="controls__labels">
+                <span
+                    class="label-text controls__labels__label controls__labels__prev"
+                    :class="{
+                        'controls__labels__label--lamp-on': prevLampOn,
+                    }"
+                >
+                    Previous
+                </span>
+                <span
+                    class="label-text controls__labels__label controls__labels__next"
+                    :class="{
+                        'controls__labels__label--lamp-on': nextLampOn,
+                    }"
+                >
+                    Next
+                </span>
+            </p>
+            <button
+                class="metal-button controls__button"
+                :class="{
+                    'controls__button--release': release,
+                }"
+                :style="{
+                    transform: `rotate(${getDeg}deg`,
+                }"
+                aria-label="항목 선택 다이얼"
+                @mousedown="onMouseDown"
+            />
+        </div>
+        <button
+            class="metal-button controls__link"
+            :class="{
+                'controls__link--on': power,
+            }"
+            aria-label="링크로 이동하기"
+        >
+            <font-awesome-icon
+                :icon="faLink"
+            />
+        </button>
+    </div>
+</template>
+<script>
+    import { faLink } from '@fortawesome/free-solid-svg-icons';
+
+    const maxDeg = 135;
+    const minDeg = 45;
+
+    export default {
+        name: 'TvControls',
+        components: {
+            TvControlsDisplay: () => import('~/components/TvControlsDisplay'),
+        },
+        props: {
+            power: {
+                type: Boolean,
+                default: true,
+            },
+        },
+        data () {
+            return {
+                deg: 90,
+                posX: 0,
+                posY: 0,
+                release: false,
+                prevLampOn: false,
+                nextLampOn: false,
+                lampTimeout: null,
+            };
+        },
+        computed: {
+            getDeg () {
+                return this.deg;
+            },
+            faLink () {
+                return faLink;
+            },
+        },
+        methods: {
+            onMouseDown (event) {
+                const bounding = event.target.getBoundingClientRect();
+                this.posX = Math.ceil(bounding.x) + bounding.width / 2;
+                this.posY = Math.ceil(bounding.y) + bounding.height / 2;
+
+                this.release = false;
+
+                window.addEventListener('mousemove', this.onMouseMove);
+                window.addEventListener('mouseup', this.onMouseUp);
+            },
+            onMouseMove (event) {
+                const x = this.posX - event.clientX;
+                const y = this.posY - event.clientY;
+                let deg = Math.ceil(Math.atan2(y, x) * 180 / Math.PI);
+                deg = deg < 0 ? deg + 360 : deg;
+
+                if (deg <= maxDeg && deg >= minDeg) {
+                    this.deg = deg;
+                } else {
+                    this.onMouseUp();
+
+                    if (deg < 90) {
+                        this.blinkLamp('prev');
+                    } else {
+                        this.blinkLamp('next');
+                    }
+                }
+            },
+            onMouseUp () {
+                this.deg = 90;
+                this.release = true;
+                window.removeEventListener('mousemove', this.onMouseMove);
+                window.removeEventListener('mouseup', this.onMouseUp);
+            },
+            blinkLamp (target) {
+                if (this.power) {
+                    this[`${target}LampOn`] = true;
+
+                    this.lampTimeout = setTimeout(() => {
+                        this[`${target}LampOn`] = false;
+                        clearTimeout(this.lampTimeout);
+                    }, 1000);
+                }
+            },
+        },
+    };
+</script>
+<style lang="scss" scoped>
+    .controls {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        width: 420px;
+        height: 100%;
+        background: url('~assets/image/wood.png');
+        border-radius: 25px;
+    }
+
+    .controls__wrapper {
+        display: inline-block;
+        position: relative;
+    }
+
+    .controls__labels__label {
+        position: absolute;
+        top: -1.5em;
+
+        &:after {
+            content: '';
+            position: absolute;
+            display: block;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #fff;
+            bottom: -100%;
+        }
+
+        &:before {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            top: -1em;
+            left: 50%;
+            transform: translate3d(-50%, 0, 0);
+            background: rgba(#fff, 0.5);
+            border: 1px solid $woodBorder;
+            border-radius: 50%;
+            box-shadow: inset -1px -1px 2px 0 rgba(0, 0, 0, 0.75);
+            transition: all 200ms ease-out;
+        }
+    }
+
+    .controls__labels__label--lamp-on {
+        &:before {
+            background: $orange;
+            box-shadow:
+                inset -1px -1px 2px 0 rgba(0, 0, 0, 0.75),
+                0 0 5px 2px $orange;
+        }
+    }
+
+    .controls__labels__prev {
+        left: -50%;
+
+        &:after {
+            right: 0.5em;
+        }
+    }
+
+    .controls__labels__next {
+        right: -35%;
+
+        &:after {
+            left: 0.5em;
+        }
+    }
+
+    .controls__button {
+        width: 10em;
+        height: 10em;
+        box-shadow: 0 0 5px 3px rgba(#000, 0.75);
+
+        &:after {
+            content: '';
+            position: absolute;
+            display: block;
+            width: 0.5em;
+            height: 0.5em;
+            background: #ff4500;
+            border-radius: 50%;
+            top: 50%;
+            left: 1em;
+            transform: translate3D(0, -50%, 0);
+            box-shadow: inset 2px -1px 2px 0 rgba(#000, 0.5);
+        }
+    }
+
+    .controls__button--release {
+        transition: transform 250ms ease-in;
+    }
+
+    .controls__link {
+        width: 2.25em;
+        height: 2.25em;
+        box-shadow: 1px 1px 2px 2px #000000;
+        font-size: 1.25em;
+        transition: all 500ms ease-in;
+
+        &:active {
+            box-shadow: -1px -1px 1px 1px #000000;
+        }
+    }
+
+    .controls__link--on {
+        box-shadow: 0 0 1px 1px rgba(0, 0, 0, 1);
+        color: $orange;
+        filter: drop-shadow(0 0 2px $orange);
+        border: 1px solid $orange;
+    }
+</style>

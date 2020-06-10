@@ -117,7 +117,9 @@
 </script>
 <style lang="scss" scoped>
     .clock {
-        display: inline-block;
+        display: block;
+        position: relative;
+        width: 1080px;
     }
 
     .clock__nixie-tubes {
@@ -129,7 +131,7 @@
         justify-content: space-around;
         align-items: center;
         position: relative;
-        width: 1080px;
+        width: 100%;
         height: 250px;
         background-color: #000;
         background-image: url('~assets/image/wood.png');

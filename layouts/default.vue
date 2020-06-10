@@ -21,6 +21,7 @@
 
     body, #__nuxt, #__layout, #layout-default {
         height: 100%;
+        background: #000;
     }
 
     *,

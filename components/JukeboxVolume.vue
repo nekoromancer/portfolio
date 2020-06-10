@@ -1,5 +1,8 @@
 <template>
     <div class="volume">
+        <h1 class="label-text volume__h1">
+            Volume
+        </h1>
         <span class="label-text volume__label volume__label-min">
             Min
         </span>
@@ -76,6 +79,14 @@
 <style lang="scss" scoped>
     .volume {
         position: relative;
+    }
+
+    .volume__h1 {
+        position: absolute;
+        top: -1.5em;
+        left: 50%;
+        transform: translate3D(-50%, 0, 0);
+        font-size: 1.5em;
     }
 
     .volume__button {
