@@ -23,9 +23,9 @@
                 </span>
             </p>
             <button
-                class="metal-button controls__button"
+                class="metal-button controls__dial"
                 :class="{
-                    'controls__button--release': release,
+                    'controls__dial--release': release,
                 }"
                 :style="{
                     transform: `rotate(${getDeg}deg`,
@@ -34,21 +34,51 @@
                 @mousedown="onMouseDown"
             />
         </div>
-        <button
-            class="metal-button controls__link"
-            :class="{
-                'controls__link--on': power,
-            }"
-            aria-label="링크로 이동하기"
-        >
-            <font-awesome-icon
-                :icon="faLink"
-            />
-        </button>
+
+        <div class="controls__links">
+            <button
+                class="metal-button controls__links__link"
+                :class="{
+                    'controls__link--on': power,
+                }"
+                aria-label="링크로 이동하기"
+            >
+                <font-awesome-icon
+                    :icon="faLink"
+                />
+            </button>
+            <a
+                href="https://www.github.com/nekoromancer"
+                target="_blank"
+                rel="noreferrer"
+                class="metal-button controls__links__link"
+                :class="{
+                    'controls__link--on': power,
+                }"
+                aria-label="깃허브로 이동하기"
+            >
+                <font-awesome-icon
+                    :icon="faGithub"
+                />
+            </a>
+            <a
+                href="mailto:nekonitrate@gmail.com"
+                class="metal-button controls__links__link"
+                :class="{
+                    'controls__link--on': power,
+                }"
+                aria-label="이메일 보내기"
+            >
+                <font-awesome-icon
+                    :icon="faEnvelope"
+                />
+            </a>
+        </div>
     </div>
 </template>
 <script>
-    import { faLink } from '@fortawesome/free-solid-svg-icons';
+    import { faLink, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+    import { faGithub } from '@fortawesome/free-brands-svg-icons';
 
     const maxDeg = 135;
     const minDeg = 45;
@@ -73,14 +103,14 @@
                 prevLampOn: false,
                 nextLampOn: false,
                 lampTimeout: null,
+                faLink,
+                faGithub,
+                faEnvelope,
             };
         },
         computed: {
             getDeg () {
                 return this.deg;
-            },
-            faLink () {
-                return faLink;
             },
         },
         methods: {
@@ -205,7 +235,7 @@
         }
     }
 
-    .controls__button {
+    .controls__dial {
         width: 10em;
         height: 10em;
         box-shadow: 0 0 5px 3px rgba(#000, 0.75);
@@ -225,13 +255,19 @@
         }
     }
 
-    .controls__button--release {
+    .controls__dial--release {
         transition: transform 250ms ease-in;
     }
 
-    .controls__link {
+    .controls__links {
+        text-align: center;
+    }
+
+    .controls__links__link {
+        display: inline-block;
         width: 2.25em;
         height: 2.25em;
+        margin-right: 1em;
         box-shadow: 1px 1px 2px 2px #000000;
         font-size: 1.25em;
         transition: all 500ms ease-in;
@@ -239,6 +275,17 @@
         &:active {
             box-shadow: -1px -1px 1px 1px #000000;
         }
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+
+    a.controls__links__link {
+        display: inline-flex;
+        vertical-align: middle;
+        justify-content: center;
+        align-items: center;;
     }
 
     .controls__link--on {

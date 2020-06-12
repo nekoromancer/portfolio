@@ -1,0 +1,10 @@
+$orange: #ffa500;
+$woodBorder: #6e5a21;
+
+$breakPoint: 1080px;
+
+@mixin media($type) {
+    @if ($type == mobile) {
+        @media (max-width: $breakPoint) {@content;}
+    }
+}
