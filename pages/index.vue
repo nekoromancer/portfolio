@@ -45,6 +45,9 @@
                 spinnerDisabled: false,
             };
         },
+        mounted () {
+            this.$store.commit('portfolio/setLink');
+        },
         methods: {
             onSound (event) {
                 this.sound = Math.abs(Math.ceil((event - 128) / 128));

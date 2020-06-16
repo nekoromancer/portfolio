@@ -41,9 +41,10 @@
             <button
                 class="metal-button controls__links__link"
                 :class="{
-                    'controls__links__link--on': power,
+                    'controls__links__link--on': power && getCurrentLink,
                 }"
                 aria-label="링크로 이동하기"
+                @click="moveToLink"
             >
                 <font-awesome-icon
                     :icon="faLink"
@@ -108,6 +109,9 @@
             getDeg () {
                 return this.deg;
             },
+            getCurrentLink () {
+                return this.$store.state.portfolio.currentLink;
+            },
         },
         methods: {
             onMouseDown (event) {
@@ -135,8 +139,10 @@
 
                     if (deg < 90) {
                         this.blinkLamp('prev');
+                        this.$store.dispatch('portfolio/prevItem');
                     } else {
                         this.blinkLamp('next');
+                        this.$store.dispatch('portfolio/nextItem');
                     }
                 }
             },
@@ -156,6 +162,11 @@
                         this[`${target}LampOn`] = false;
                         clearTimeout(this.lampTimeout);
                     }, 1000);
+                }
+            },
+            moveToLink () {
+                if (this.getCurrentLink) {
+                    window.open(this.getCurrentLink);
                 }
             },
         },

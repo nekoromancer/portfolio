@@ -24,11 +24,13 @@
         },
         data () {
             return {
-                total: 12,
-                current: 1,
+                total: this.$store.state.portfolio.list.length,
             };
         },
         computed: {
+            current () {
+                return this.$store.state.portfolio.currentIndex + 1;
+            },
             getValue () {
                 return target => {
                     if (this.power) {

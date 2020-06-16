@@ -6,20 +6,12 @@
                 'contents__wrap--on': power,
             }"
         >
-            <p class="contents__item">
-                Name: 2016 Kia Sportage Digital Campaign
-            </p>
-            <p class="contents__item">
-                Description: 2016 Kia All new Sportage 글로벌 프로모션 페이지. 다국어 지원은 Angular 모듈로 구현했다.
-            </p>
-            <p class="contents__item">
-                Terms: 2015. 12 ~ 2016. 1
-            </p>
-            <p class="contents__item">
-                My Roles: Back-end, Front-end 전체 개발(100%)
-            </p>
-            <p class="contents__item">
-                Skill Set: PHP(Slim Framework), Angluar, MySql
+            <p
+                v-for="content in getPortfolio"
+                :key="content"
+                class="contents__item"
+            >
+                {{ content }}
             </p>
         </div>
         <div
@@ -49,6 +41,11 @@
                 setNoiseTimeout: null,
                 offNoiseTimeout: null,
             };
+        },
+        computed: {
+            getPortfolio () {
+                return this.$store.getters['portfolio/getPortfolio'];
+            },
         },
         watch: {
             power: {
@@ -132,6 +129,7 @@
 
     .contents__item {
         margin-bottom: 1em;
+        word-break: keep-all;
 
         &:last-child {
             margin-bottom: 0;
