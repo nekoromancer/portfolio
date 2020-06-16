@@ -59,6 +59,12 @@
         padding: 3em;
         border-radius: 3em;
         background: url('~assets/image/wood.png');
+
+        @include media(mobile) {
+            width: 100%;
+            padding: 1.5em;
+            border-radius: 10px;
+        }
     }
 
     .tv-body__tube {
@@ -76,6 +82,10 @@
         overflow: hidden;
         transition: background 250ms, opacity 250ms ease-out;
 
+        @include media(mobile) {
+            padding-top: 75%;
+        }
+
         &:before {
             content: '';
             display: block;
@@ -88,6 +98,11 @@
             border-radius: 50%;
             box-shadow: 0 0 10px 8px #fff;
             opacity: 0.5;
+
+            @include media(mobile) {
+                top: 4em;
+                left: 3em;
+            }
         }
 
         &:after {
@@ -116,9 +131,12 @@
     .tv-body__contents {
         position: absolute;
         top: 3em;
-        bottom: 3em;
         left: 3em;
-        right: 3em;
+
+        @include media(mobile) {
+            top: 1.5em;
+            left: 1.5em;
+        }
     }
 
     .tv-body__power-button {
@@ -136,6 +154,14 @@
         color: #afafaf;
         outline: none;
         font-size: 1.5em;
+
+        @include media(mobile) {
+            width: 30px;
+            height: 30px;
+            font-size: 1em;
+            right: 1em;
+            bottom: 1em;
+        }
     }
 
     .tv-body__power-button--on {

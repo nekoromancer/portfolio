@@ -98,6 +98,11 @@
         overflow: hidden;
         font-family: 'DOSGothic', sans-serif;
         color: #00db0b;
+
+        @include media(mobile) {
+            width: calc(100% - 3em);
+            height: calc(100% - 3em);
+        }
     }
 
     .contents__wrap {
@@ -111,6 +116,11 @@
         transition: transform 100ms ease-out, opacity 100ms linear, filter 3000ms ease-out;
         background: #fff;
         filter: blur(5px);
+
+        @include media(mobile) {
+            height: 100%;
+            padding: 3em 3em;
+        }
     }
 
     .contents__wrap--on {

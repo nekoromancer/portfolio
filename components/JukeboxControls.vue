@@ -83,8 +83,22 @@
     };
 </script>
 <style lang="scss" scoped>
+    .controls {
+        @include media(mobile) {
+            display: flex;
+            width: 100%;
+            justify-content: space-around;
+            align-items: center;
+        }
+    }
+
     .controls__display {
         margin-bottom: 1em;
+
+        @include media(mobile) {
+            zoom: 0.5;
+            margin: 0;
+        }
     }
 
     .controls__display__digit {

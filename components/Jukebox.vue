@@ -25,6 +25,7 @@
             />
         </div>
         <jukebox-volume
+            class="jukebox__volume"
             @volumeChange="volumeChange"
         />
     </div>
@@ -125,6 +126,13 @@
         z-index: 999;
         overflow: hidden;
 
+        @include media(mobile) {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            padding: 1em 0;
+        }
+
         &:after {
             content: '';
             display: block;
@@ -141,11 +149,23 @@
         }
     }
 
+    .jukebox__analyzer {
+        @include media(mobile) {
+            display: none;
+        }
+    }
+
     .jukebox__analyzer__bar {
         margin-right: 3px;
 
         &:last-child {
             margin-right: 0;
+        }
+    }
+
+    .jukebox__volume {
+        @include media(mobile) {
+            display: none;
         }
     }
 </style>

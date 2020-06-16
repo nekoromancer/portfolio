@@ -65,10 +65,15 @@
 </script>
 <style lang="scss" scoped>
     .container {
+        width: 100%;
         min-height: 100%;
         background: #000;
         text-align: center;
         padding: 50px 0;
+
+        @include media(mobile) {
+            padding: 0;
+        }
 
         &:before,
         &:after {
@@ -116,6 +121,10 @@
 
     .container__component {
         margin: 0 auto 1em;
+
+        @include media(mobile) {
+            margin: 0 auto 0.25em;
+        }
 
         &:last-child {
             margin-bottom: 0;

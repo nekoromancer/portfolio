@@ -1,10 +1,12 @@
 <template>
     <div class="tv">
         <tv-body
+            class="tv__body"
             :power="power"
             @power="togglePower"
         />
         <tv-controls
+            class="tv__controls"
             :power="power"
         />
     </div>
@@ -35,5 +37,15 @@
         position: relative;
         width: 1080px;
         height: 486px;
+
+        @include media(mobile) {
+            width: 100%;
+            height: auto;
+            flex-direction: column;
+        }
+    }
+
+    .tv__body {
+        margin-bottom: 0.5em;
     }
 </style>

@@ -1,9 +1,10 @@
 <template>
     <div class="controls">
         <tv-controls-display
+            class="controls__display"
             :power="power"
         />
-        <div class="controls__wrapper">
+        <div class="controls__dial__wrapper">
             <p class="controls__labels">
                 <span
                     class="label-text controls__labels__label controls__labels__prev"
@@ -32,6 +33,7 @@
                 }"
                 aria-label="항목 선택 다이얼"
                 @mousedown="onMouseDown"
+                @touchstart.prevent="onMouseDown"
             />
         </div>
 
@@ -39,7 +41,7 @@
             <button
                 class="metal-button controls__links__link"
                 :class="{
-                    'controls__link--on': power,
+                    'controls__links__link--on': power,
                 }"
                 aria-label="링크로 이동하기"
             >
@@ -51,10 +53,7 @@
                 href="https://www.github.com/nekoromancer"
                 target="_blank"
                 rel="noreferrer"
-                class="metal-button controls__links__link"
-                :class="{
-                    'controls__link--on': power,
-                }"
+                class="metal-button controls__links__link controls__links__link--on"
                 aria-label="깃허브로 이동하기"
             >
                 <font-awesome-icon
@@ -63,10 +62,7 @@
             </a>
             <a
                 href="mailto:nekonitrate@gmail.com"
-                class="metal-button controls__links__link"
-                :class="{
-                    'controls__link--on': power,
-                }"
+                class="metal-button controls__links__link controls__links__link--on"
                 aria-label="이메일 보내기"
             >
                 <font-awesome-icon
@@ -123,10 +119,12 @@
 
                 window.addEventListener('mousemove', this.onMouseMove);
                 window.addEventListener('mouseup', this.onMouseUp);
+                window.addEventListener('touchmove', this.onMouseMove);
+                window.addEventListener('touchend', this.onMouseUp);
             },
             onMouseMove (event) {
-                const x = this.posX - event.clientX;
-                const y = this.posY - event.clientY;
+                const x = this.posX - (event.clientX || event.touches[0].clientX);
+                const y = this.posY - (event.clientY || event.touches[0].clientY);
                 let deg = Math.ceil(Math.atan2(y, x) * 180 / Math.PI);
                 deg = deg < 0 ? deg + 360 : deg;
 
@@ -147,6 +145,8 @@
                 this.release = true;
                 window.removeEventListener('mousemove', this.onMouseMove);
                 window.removeEventListener('mouseup', this.onMouseUp);
+                window.removeEventListener('touchmove', this.onMouseMove);
+                window.removeEventListener('touchend', this.onMouseUp);
             },
             blinkLamp (target) {
                 if (this.power) {
@@ -163,8 +163,8 @@
 </script>
 <style lang="scss" scoped>
     .controls {
-        position: relative;
         display: flex;
+        position: relative;
         flex-direction: column;
         justify-content: space-around;
         align-items: center;
@@ -172,11 +172,27 @@
         height: 100%;
         background: url('~assets/image/wood.png');
         border-radius: 25px;
+
+        @include media(mobile) {
+            width: 100%;
+            border-radius: 10px;
+            padding: 4em 0 1em;
+        }
     }
 
-    .controls__wrapper {
+    .controls__display {
+        @include media(mobile) {
+            display: none;
+        }
+    }
+
+    .controls__dial__wrapper {
         display: inline-block;
         position: relative;
+
+        @include media(mobile) {
+            margin-bottom: 1.5em;
+        }
     }
 
     .controls__labels__label {
@@ -288,7 +304,7 @@
         align-items: center;;
     }
 
-    .controls__link--on {
+    .controls__links__link--on {
         box-shadow: 0 0 1px 1px rgba(0, 0, 0, 1);
         color: $orange;
         filter: drop-shadow(0 0 2px $orange);

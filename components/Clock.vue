@@ -55,6 +55,34 @@
                 :brightness="getMaxOpacity"
                 @brightnessChange="onBrightnessChange"
             />
+            <div class="clock__bottom__clock--mobile clock-mobile">
+                <digit
+                    :string="getTimes[0].toString()"
+                    class="clock-mobile__digit"
+                />
+                <digit
+                    :string="getTimes[1].toString()"
+                    class="clock-mobile__digit"
+                />
+                <span class="label-text clock-mobile__colon">:</span>
+                <digit
+                    :string="getTimes[2].toString()"
+                    class="clock-mobile__digit"
+                />
+                <digit
+                    :string="getTimes[3].toString()"
+                    class="clock-mobile__digit"
+                />
+                <span class="label-text clock-mobile__colon">:</span>
+                <digit
+                    :string="getTimes[4].toString()"
+                    class="clock-mobile__digit"
+                />
+                <digit
+                    :string="getTimes[5].toString()"
+                    class="clock-mobile__digit"
+                />
+            </div>
         </div>
     </div>
 </template>
@@ -70,6 +98,7 @@
             ClockNixie: () => import('~/components/ClockNixie'),
             ClockUtc: () => import('~/components/ClockUtc'),
             ClockBrightness: () => import('~/components/ClockBrightness'),
+            Digit: () => import('~/components/Digit'),
         },
         props: {
             sound: {
@@ -120,10 +149,18 @@
         display: block;
         position: relative;
         width: 1080px;
+
+        @include media(mobile) {
+            width: 100%;
+        }
     }
 
     .clock__nixie-tubes {
         line-height: 0;
+
+        @include media(mobile) {
+            display: none;
+        }
     }
 
     .clock__bottom {
@@ -136,6 +173,19 @@
         background-color: #000;
         background-image: url('~assets/image/wood.png');
         border-radius: 25px;
+
+        @include media(mobile) {
+            height: auto;
+            border-radius: 10px;
+            padding: 1em 0;
+        }
+    }
+
+    .clock__bottom__utc-offset,
+    .clock__bottom__brightness {
+        @include media(mobile) {
+            display: none;
+        }
     }
 
     .clock__bottom__speaker {
@@ -144,6 +194,10 @@
         height: 150px;
         background: radial-gradient(circle, rgba(0, 0, 0, 1) 0%, rgba(84, 84, 84, 1) 100%);
         border-radius: 50%;
+
+        @include media(mobile) {
+            display: none;
+        }
 
         &:after {
             content: '';
@@ -200,5 +254,22 @@
         border: 2px solid #000;
         box-shadow: inset 3px 3px 12px 3px rgba(#888, 0.5), inset -3px -4px 12px 3px rgba(#000, 1);
         z-index: 999;
+    }
+
+    .clock-mobile {
+        display: none;
+
+        @include media(mobile) {
+            display: block;
+            font-size: 14px;
+        }
+    }
+
+    .clock-mobile__digit {
+        zoom: 0.7;
+    }
+
+    .clock-mobile__colon {
+        font-size: 2em;
     }
 </style>
