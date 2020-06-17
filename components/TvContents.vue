@@ -7,9 +7,12 @@
             }"
         >
             <p
-                v-for="content in getPortfolio"
+                v-for="(content, index) in getPortfolio"
                 :key="content"
                 class="contents__item"
+                :class="{
+                    'contents__item--no-on-mobile': index > 1,
+                }"
             >
                 {{ content }}
             </p>
@@ -95,6 +98,7 @@
         overflow: hidden;
         font-family: 'DOSGothic', sans-serif;
         color: #00db0b;
+        transform: scale3d(1, 1, 1);
 
         @include media(mobile) {
             width: calc(100% - 3em);
@@ -115,7 +119,6 @@
         filter: blur(5px);
 
         @include media(mobile) {
-            height: 100%;
             padding: 3em 3em;
         }
     }
@@ -133,6 +136,12 @@
 
         &:last-child {
             margin-bottom: 0;
+        }
+    }
+
+    .contents__item--no-on-mobile {
+        @include media(mobile) {
+            display: none;
         }
     }
 

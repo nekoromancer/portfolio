@@ -18,7 +18,7 @@ module.exports = {
         meta: [
             { charset: 'utf-8' },
             { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-            { hid: 'description', name: 'description', content: '안녕하세요. 프론트 엔드 웹 개발자 이승엽 입니다.' },
+            { hid: 'description', name: 'description', content: '안녕하세요. 프론트 엔드 웹 개발자 Nekoromancer 입니다.' },
             { name: 'msapplication-TileColor', content: '#ffffff' },
             { name: 'msapplication-TileImage', content: '/ms-icon-144x144.png' },
             { name: 'theme-color', content: '#000000' },
